@@ -61,7 +61,7 @@ Future<void> init() async {
 }
 ```
 --------
-3. constants
+## 3. constants
 As a name implies we store contants of app in this folder. It maybe followings and more:
 
 - **app_text_styles.dart**
