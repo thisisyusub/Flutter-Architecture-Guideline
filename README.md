@@ -206,3 +206,53 @@ class AuthRepository implements BaseAuthRepository {
 }
 ```
 
+- **services**
+
+Services maybe all things like - data services that fetching data from api, database, payment service, location service or someting else. I usually use `retrofit` to write api methods fastly. And we should register services in `init.dart` by locator (getIt or someting else) to use inside app.
+
+```dart
+@RestApi(baseUrl: Configs.baseUrl)
+abstract class AuthService {
+  factory AuthService(Dio dio, {String baseUrl}) = _AuthService;
+
+  @POST('/login')
+  Future<Response> login();
+}
+```
+--------
+5. **l10n**
+
+It is the new localization approach of Flutter. This folder just stores `*.arb` files for different languages. You can 
+
+--------
+## 6. Presentation
+Presentation contains all UI codes and integration with blocs. It is divided into different parts.
+
+- **dialogs**
+
+You can apart your dialogs code like pages in other place to handle easly:
+
+> For each dialog, pages me creating a folder like `info` and inside info folder `info_dialog.dart`. If this dialog has some widgets you can apart them to other folder inside `info` folder to `widgets` folder.
+
+```dart
+class InfoDialog extends StatelessWidget {
+  const InfoDialog({
+    Key? key,
+    required this.message,
+  }) : super(key: key);
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    ...
+  }
+}
+```
+
+- **pages**
+
+Pages is the same with dialogs approach.
+
+
+
