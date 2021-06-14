@@ -154,7 +154,55 @@ class Fonts {
   final fontFamily = 'Inter';
 }
 ```
+--------
+## 4. data
+This is the one of the most useful part of app. It contains all data and its processes.
 
+- **contractors**
 
+It is like a protocol or interface (abstract class in Dart) to follow SOLID principles:
 
+```dart 
+base_auth_repository.dart
+
+abstract class BaseAuthRepository {
+  Future<Response> login();
+
+  Future<void> logOut();
+}
+```
+> It will be used by `repositories` as interfaces to follow rules. If we need adad something to `repositories`, first we will add it to contractors.
+> I mainly advice to divide contractors correctly - auth, orders, users and etc.
+
+- **models**
+
+As name implies, it is just simple entity container. You can divide it to 2 folders like - `response` and `request` models.
+```
+- models
+  - response
+    order_details.dart
+  - request
+    order_details_request_body.dart
+```
+
+- **repositories**
+It is just implementations of contractors. then, it will be injected to Blocs using contractors reference (look at DI (Dependency Inversion) principle of SOLID).
+
+> Keep in mind that it can access to all services (next part).
+
+```dart
+class AuthRepository implements BaseAuthRepository {
+ final _authService = locator.get<AuthService>();
+ 
+  Future<Response> login() {
+    ...
+   return _authService.login();
+  }
+
+  Future<void> logOut() {
+    ...
+    return _authService.logOut();
+  }
+}
+```
 
