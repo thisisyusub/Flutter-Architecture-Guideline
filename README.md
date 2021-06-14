@@ -60,6 +60,101 @@ Future<void> init() async {
   });
 }
 ```
+--------
+3. constants
+As a name implies we store contants of app in this folder. It maybe followings and more:
+
+- **app_text_styles.dart**
+
+Text styles of app are stored in this folder:
+```dart
+class AppTextStyles {
+  const AppTextStyles._();
+
+  static const interW500 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontStyle: FontStyle.normal,
+  );
+}
+```
+
+- **app_themes.dart**
+
+This file can contain light and dart theme details:
+```dart
+class AppThemes {
+ AppThemes._();
+
+  static final theme = ThemeData(
+    fontFamily: Assets.fonts.fontFamily,
+    primaryColor: AppColors.primary,
+    accentColor: AppColors.primary,
+    scaffoldBackgroundColor: Colors.white,
+    textTheme: TextTheme(
+      bodyText1: AppTextStyles.interW500.copyWith(color: AppColors.altoBlack),
+    ),
+  );
+}
+```
+
+- **app_colors.dart**
+
+It just contains colors of app:
+```dart
+class AppColors {
+  const AppColors._();
+
+  static const navyGrey = Color.fromRGBO(129, 140, 153, 1);
+  static const greenGradient = Color(0xffF0FAEA);
+}
+```
+
+- **routes.dart**
+
+This file stores static paths of app for routing:
+```dart
+class Routes {
+  const Routes._();
+
+  static const String signIn = '/signIn';
+  static const String goods = '/goods';
+}
+```
+
+- **assets.dart**
+
+To access assets easily, we can store them in one place like this:
+```dart
+class Assets {
+  const Assets._();
+
+  static final images = Images._();
+  static final sounds = Sounds._();
+  static final fonts = Fonts._();
+}
+
+@protected
+class Images {
+  Images._();
+
+  static final _basePath = 'assets/images';
+  
+  final icon = '$_basePath/icon.png';
+}
+
+@protected
+class Sounds {
+  const Sounds._();
+}
+
+@protected
+class Fonts {
+  Fonts._();
+
+  final fontFamily = 'Inter';
+}
+```
+
 
 
 
