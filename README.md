@@ -1,2 +1,2 @@
-# Flutter Architecture Guideline
+<img src="architecture.png"/>
 
