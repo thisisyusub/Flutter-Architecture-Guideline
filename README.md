@@ -222,10 +222,10 @@ abstract class AuthService {
 --------
 ## 5. **l10n**
 
-It is the new localization approach of Flutter. This folder just stores `*.arb` files for different languages. You can 
+It is the new localization approach of Flutter. This folder just stores `*.arb` files for different languages. You can read about it from [here](https://docs.google.com/document/d/10e0saTfAv32OZLRmONy866vnaw0I2jwL8zukykpgWBc/edit). 
 
 --------
-## 6. Presentation
+## 6. presentation
 Presentation contains all UI codes and integration with blocs. It is divided into different parts.
 
 - **dialogs**
@@ -303,3 +303,75 @@ class App extends StatelessWidget {
 --------
 ## 7. utils
 Utils can be anything  - `mixin`, `extension` or other helper methods, classes. You can divide them by folder like - `mixins`, `extensions`, `others`.
+
+--------
+## 8. locator.dart
+It is the simple `DI (Dependency Injection) Containe` I have written for myself. You can also use `getIt` or other packages.
+```dart
+typedef AsyncRegister<T> = Future<T> Function();
+
+late final locator = Locator.instance;
+
+class Locator {
+  Locator._();
+
+  static _Locator? _instance = _Locator();
+
+  static _Locator get instance => _instance!;
+
+  T get<T>() => _instance!.get<T>();
+
+  void register<T>(T instance) => _instance!.register<T>(instance);
+
+  Future<void> registerAsync<T>(AsyncRegister<T> asyncBuilder) =>
+      _instance!.registerAsync<T>(asyncBuilder);
+
+  void close() {
+    _instance!.close();
+    _instance = null;
+  }
+}
+
+class _Locator implements Locator {
+  final _services = <Type, dynamic>{};
+
+  @override
+  T get<T>() {
+    if (_services.containsKey(T)) return _services[T]!;
+    throw LocatorNotFoundException();
+  }
+
+  @override
+  void register<T>(T instance) {
+    _services.putIfAbsent(T, () => instance);
+  }
+
+  @override
+  Future<void> registerAsync<T>(AsyncRegister<T> asyncBuilder) async {
+    final instance = await asyncBuilder.call();
+    _services.putIfAbsent(T, () => instance);
+  }
+
+  @override
+  void close() {
+    _services.clear();
+  }
+}
+
+class LocatorNotFoundException implements Exception {}
+```
+--------
+## 9. main.dart
+It will be just simple void method to start app:
+```dart
+void main() async {
+   // calling `init.dart` file to initialize services
+   await init();
+   runApp(App())
+  }
+```
+--------
+## Maintainers
+
+- [Kanan Yusubov](https://github.com/thisisyusub)
+
