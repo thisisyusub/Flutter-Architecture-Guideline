@@ -220,7 +220,7 @@ abstract class AuthService {
 }
 ```
 --------
-5. **l10n**
+## 5. **l10n**
 
 It is the new localization approach of Flutter. This folder just stores `*.arb` files for different languages. You can 
 
@@ -254,5 +254,52 @@ class InfoDialog extends StatelessWidget {
 
 Pages is the same with dialogs approach.
 
+- **global**
 
+If a widget used in many places, you can insert them inside `global` folder to use several places.
 
+- **router**
+I usually use `onGenerateRoute` method of `MaterialApp` (or `WidgetsApp`, `CupertinoApp`) to make `named routing`. You can also use `Navigation 2.0` approach.
+
+```dart
+class AppRouter {
+  AppRouter._();
+
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case Routes.signIn:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => SignInCubit(
+              context.read<AuthRepository>(),
+            ),
+            child: SignInPage(),
+          ),
+        );
+       default:
+        throw UnimplementedError('No defined route: ${settings.name}');
+    }
+```
+
+- **app.dart**
+
+Generally, I prefer to apart `main.dart` from widgets. That is why. `app.dart` file contains starting configrations of app. Then we will call it from `main.dart`.
+
+```dart
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+ 
+    return MaterialApp(
+      debugShowCheckedModeBanner: kDebugMode,
+      theme: AppThemes.theme,
+      locale: locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+       home: AuthPage(),
+       onGenerateRoute: AppRouter.onGenerateRoute,
+    );
+```
+> You can inject your main repositories or blocs in this place, for example `AuthCubit`, `AuthRepository`, `LanguageCubit`, `PreferencesRepository` and etc.
+--------
+## 7. utils
+Utils can be anything  - `mixin`, `extension` or other helper methods, classes. You can divide them by folder like - `mixins`, `extensions`, `others`.
