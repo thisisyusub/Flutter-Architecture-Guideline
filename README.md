@@ -3,7 +3,7 @@
 
 ### It is the folder architecture created by my approach. It maybe useful with your contribution to improve architecture. Let's explain about each part more deeply.
 
-> Keep in mind that, following numbered parts are folders.
+> Keep in mind that, following numbered parts are folders or dart files.
 --------
 
 ## 1. bloc
