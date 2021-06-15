@@ -29,9 +29,7 @@ Configrations are added to this folder. It contains the followings:
 - config.dart
 We can store main configrations in this file:
 ```dart
-class Configs {
-  Configs._();
-
+abstract class Configs {
   static const String SENTRY_DSN ='...';
   static const bool enableLogging = kDebugMode;
   static const String baseUrl = '...';
@@ -68,9 +66,7 @@ As a name implies we store contants of app in this folder. It maybe followings a
 
 Text styles of app are stored in this folder:
 ```dart
-class AppTextStyles {
-  const AppTextStyles._();
-
+abstract class AppTextStyles {
   static const interW500 = TextStyle(
     fontWeight: FontWeight.w500,
     fontStyle: FontStyle.normal,
@@ -82,9 +78,7 @@ class AppTextStyles {
 
 This file can contain light and dart theme details:
 ```dart
-class AppThemes {
- AppThemes._();
-
+abstract class AppThemes {
   static final theme = ThemeData(
     fontFamily: Assets.fonts.fontFamily,
     primaryColor: AppColors.primary,
@@ -101,9 +95,7 @@ class AppThemes {
 
 It just contains colors of app:
 ```dart
-class AppColors {
-  const AppColors._();
-
+abstract class AppColors {
   static const navyGrey = Color.fromRGBO(129, 140, 153, 1);
   static const greenGradient = Color(0xffF0FAEA);
 }
@@ -113,9 +105,7 @@ class AppColors {
 
 This file stores static paths of app for routing:
 ```dart
-class Routes {
-  const Routes._();
-
+abstract class Routes {
   static const String signIn = '/signIn';
   static const String goods = '/goods';
 }
@@ -125,32 +115,23 @@ class Routes {
 
 To access assets easily, we can store them in one place like this:
 ```dart
-class Assets {
-  const Assets._();
-
-  static final images = Images._();
-  static final sounds = Sounds._();
-  static final fonts = Fonts._();
+abstract class Assets {
+  static final images = Images();
+  static final sounds = Sounds();
+  static final fonts = Fonts();
 }
 
-@protected
-class Images {
-  Images._();
-
+class _Images {
   static final _basePath = 'assets/images';
   
   final icon = '$_basePath/icon.png';
 }
 
-@protected
-class Sounds {
-  const Sounds._();
+class _Sounds {
+  ...
 }
 
-@protected
-class Fonts {
-  Fonts._();
-
+class _Fonts {
   final fontFamily = 'Inter';
 }
 ```
