@@ -26,7 +26,7 @@ BlocObserver is simple delegate to handle all operations of Bloc in one place. Y
 ## 2. config
 Configrations are added to this folder. It contains the followings:
 
-**- config.dart**
+- **config.dart**
 
 We can store main configrations in this file:
 ```dart
@@ -36,7 +36,7 @@ abstract class Configs {
   static const String baseUrl = '...';
 }
 ```
-**- init.dart**
+- **init.dart**
 
 This file contains simple method that initializes all services and needed things before app started:
 ```dart
